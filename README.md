@@ -32,3 +32,7 @@ lalu buka http://localhost:3000 di browser
 ![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/0171c9fa-8052-4e6f-9c1f-d7d54cae055f)
 
 ![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/eb2406df-161a-4f33-adba-a13091b0dc06)
+
+![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/b96078fd-8ee4-4fa0-8233-b764fa405fd1)
+
+![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/870d5ded-af9a-4a7b-b70c-5e6e33dd34bc)
