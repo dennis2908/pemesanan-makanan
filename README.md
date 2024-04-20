@@ -1,6 +1,4 @@
-```
-Front End : Next ; Back End : Laravel, MySQL, RabbitMQ ; Docker
-```
+Front End : Next ; Back End : Laravel, MySQL, RabbitMQ ; Docker </br>
 
 copy isi .env.docker ke .env
 
