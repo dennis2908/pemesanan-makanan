@@ -1,12 +1,12 @@
 Front End : Next ; Back End : Laravel, MySQL, RabbitMQ ; Docker </br>
 
-copy isi .env.docker ke .env
+copy isi .env.docker ke .env lalu di cmd ketik :
 
 ```
 docker compose up --build
 ```
 
-Tunggu hingga akhir lalu di cmd ketik :
+Tunggu hingga akhir lalu :
 
 ```
 docker compose exec app php artisan optimize:clear
