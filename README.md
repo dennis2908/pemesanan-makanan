@@ -6,7 +6,7 @@ copy isi .env.docker ke .env
 docker compose up --build
 ```
 
-Tunggu hingga akhir lalu 
+Tunggu hingga akhir lalu di cmd ketik :
 
 ```
 docker compose exec app php artisan optimize:clear
