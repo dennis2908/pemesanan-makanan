@@ -22,7 +22,3 @@ lalu
 ```
 docker compose exec app php artisan schedule:work
 ```
-
-```
-username : dennis01 , password : dennis01, role : superadmin (Jika tidak masuk, login 2x)
-```
