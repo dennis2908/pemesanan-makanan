@@ -11,12 +11,15 @@ Tunggu hingga akhir lalu :
 ```
 docker compose exec app php artisan optimize:clear
 ```
+![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/6ba63df6-9755-445b-a7ea-3a01d8893534)
 
 lalu 
 
 ```
 docker compose exec app php artisan migrate:fresh --seed
 ```
+![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/b08d4b14-816b-4488-94fb-d46a51699923)
+
 lalu
 
 ```
