@@ -1,7 +1,9 @@
+'use client'
+
 import { Card, CardBody, CardHeader, CardFooter } from '@paljs/ui/Card';
 import Row from '@paljs/ui/Row';
 import Col from '@paljs/ui/Col';
-import React from 'react';
+import React,{useState } from 'react';
 
 import NativeSelect from '@material-ui/core/NativeSelect';
 
@@ -39,6 +41,9 @@ import LinearProgress from '@material-ui/core/LinearProgress';
 import { useRouter } from 'next/router';
 
 import  Notifications from '../../Notification/Notifications';
+
+import  {appContext} from '../../Notification/Context';
+
 
 const columns = [
   { id: 'menu', label: 'Menu', minWidth: 200 },
@@ -81,7 +86,10 @@ export default function Manajemen_list() {
 
   const [DialogSEtitle, setDialogSEtitle] = useStateRef('Register New Data');
   const [IconSEtitle, setIconSEtitle] = React.useState(<AddIcon style={{ marginBottom: -4 }} color="primary" />);
-
+  
+  const handleDataFromChild = ()=>{
+    loadData();
+  }
   const onFieldChange = (fieldName) => {
     return function (event) {
       FormData[fieldName] = event.target.value;
@@ -126,6 +134,7 @@ export default function Manajemen_list() {
       });
     await DoHideLin();
   };
+
 
   const saveData = async (e) => {
     fetch('http://127.0.0.1:8000/api/order', {
@@ -232,7 +241,7 @@ export default function Manajemen_list() {
               <Row style={style} breakPoint={{ xs: 12, lg: 4 }}>
                 <ListIcon style={{ marginBottom: -7 }} color="primary" />
 
-                <Notifications/>
+                <Notifications onDataFromChild={handleDataFromChild}/>
                 Manajemen Order
 
                
