@@ -1,5 +1,5 @@
 import React, { useState, useRef, useEffect, Fragment } from 'react';
-import { DefaultTheme, ThemeProvider } from 'styled-components';
+import styled, { DefaultTheme, ThemeProvider } from 'styled-components';
 import themes from './themes';
 import { Layout, LayoutContent, LayoutFooter, LayoutContainer, LayoutColumns, LayoutColumn } from '@paljs/ui/Layout';
 import icons from '@paljs/icons';
@@ -13,6 +13,41 @@ import { Menu, MenuRefObject } from '@paljs/ui/Menu';
 import Link from 'next/link';
 import menuItems from './menuItem';
 import SEO, { SEOProps } from 'components/SEO';
+import { isAuthenticated } from 'lib/auth';
+
+const LoadingOverlay = styled.div`
+  position: fixed;
+  z-index: 9999;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(3px);
+  animation: fade-in 0.2s ease both;
+
+  @keyframes fade-in {
+    from { opacity: 0; }
+    to { opacity: 1; }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    background: rgba(20, 26, 45, 0.72);
+  }
+`;
+
+const LoadingSpinner = styled.div`
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 3px solid rgba(51, 102, 255, 0.2);
+  border-top-color: #3366ff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+`;
 
 
 const getDefaultTheme = (): DefaultTheme['name'] => {
@@ -32,6 +67,7 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
   const [menuState, setMenuState] = useState(false);
   const menuRef = useRef<MenuRefObject>(null);
   const [seeHeader, setSeeHeader] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
 
   const getState = (state?: 'hidden' | 'visible' | 'compacted' | 'expanded') => {
     setSeeHeader(state !== 'compacted');
@@ -49,6 +85,31 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
     }
   }, []);
 
+  useEffect(() => {
+    if (router.pathname.startsWith('/auth')) {
+      return;
+    }
+
+    if (!isAuthenticated()) {
+      router.replace('/auth/signin');
+    }
+  }, [router, router.pathname]);
+
+  useEffect(() => {
+    const handleRouteStart = () => setIsLoading(true);
+    const handleRouteEnd = () => setIsLoading(false);
+
+    router.events.on('routeChangeStart', handleRouteStart);
+    router.events.on('routeChangeComplete', handleRouteEnd);
+    router.events.on('routeChangeError', handleRouteEnd);
+
+    return () => {
+      router.events.off('routeChangeStart', handleRouteStart);
+      router.events.off('routeChangeComplete', handleRouteEnd);
+      router.events.off('routeChangeError', handleRouteEnd);
+    };
+  }, [router.events]);
+
   const changeDir = () => {
     const newDir = dir === 'ltr' ? 'rtl' : 'ltr';
     setDir(newDir);
@@ -59,6 +120,11 @@ const LayoutPage: React.FC<SEOProps> = ({ children, ...rest }) => {
   return (
     <Fragment>
       <SEO {...rest} />
+      {isLoading && (
+        <LoadingOverlay role="status" aria-live="polite" aria-label="Loading">
+          <LoadingSpinner />
+        </LoadingOverlay>
+      )}
       <ThemeProvider theme={themes(theme, dir)}>
         <Fragment>
           <SimpleLayout />

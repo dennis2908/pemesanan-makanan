@@ -1,0 +1,164 @@
+{
+  "info": {
+    "name": "Pemesanan Makanan API",
+    "description": "Collection for auth, menu, and order endpoints.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "http://localhost:8000/api",
+      "type": "string"
+    },
+    {
+      "key": "jwt_token",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Auth",
+      "item": [
+        {
+          "name": "Register User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Admin User\",\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\",\n  \"password_confirmation\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/register",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "register"]
+            }
+          }
+        },
+        {
+          "name": "Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "const response = pm.response.json();",
+                  "if (response.token) {",
+                  "  pm.collectionVariables.set('jwt_token', response.token);",
+                  "}"]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@example.com\",\n  \"password\": \"password123\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/auth/login",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "login"]
+            }
+          }
+        },
+        {
+          "name": "Get Current User",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/me",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "me"]
+            }
+          }
+        },
+        {
+          "name": "Logout User",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/auth/logout",
+              "host": ["{{base_url}}"],
+              "path": ["auth", "logout"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Menu",
+      "item": [
+        {
+          "name": "List Menu",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/menu",
+              "host": ["{{base_url}}"],
+              "path": ["menu"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Order",
+      "item": [
+        {
+          "name": "List Orders",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "url": {
+              "raw": "{{base_url}}/order",
+              "host": ["{{base_url}}"],
+              "path": ["order"]
+            }
+          }
+        },
+        {
+          "name": "Create Order",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{jwt_token}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"menu\": \"Nasi Goreng\",\n  \"email\": \"customer@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{base_url}}/order",
+              "host": ["{{base_url}}"],
+              "path": ["order"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

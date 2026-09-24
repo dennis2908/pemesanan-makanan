@@ -1,26 +1,19 @@
 <?php
 
+use App\Http\Controllers\AuthController;
+use App\Http\Controllers\MenuController;
+use App\Http\Controllers\OrderController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| API Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register API routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| is assigned the "api" middleware group. Enjoy building your API!
-|
-*/
-
-use App\Http\Controllers\OrderController;
-
-use App\Http\Controllers\MenuController;
-
 Route::middleware(['cors'])->group(function () {
+    Route::post('auth/register', [AuthController::class, 'register']);
+    Route::post('auth/login', [AuthController::class, 'login']);
 
-    Route::resource('order', OrderController::class);
-
-    Route::resource('menu', MenuController::class);
+    Route::middleware('auth:api')->group(function () {
+        Route::get('auth/me', [AuthController::class, 'me']);
+        Route::post('auth/logout', [AuthController::class, 'logout']);
+        Route::resource('order', OrderController::class);
+        Route::resource('menu', MenuController::class);
+    });
 });

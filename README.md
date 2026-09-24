@@ -3,7 +3,7 @@ Front End : Next ; Back End : Laravel, MySQL, RabbitMQ ; Docker </br>
 copy isi .env.docker ke .env lalu di cmd ketik :
 
 ```
-docker compose up --build
+docker compose up --build -d
 ```
 
 Tunggu hingga akhir lalu :
@@ -46,3 +46,8 @@ lalu buka http://localhost:3000 di browser
 ![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/b96078fd-8ee4-4fa0-8233-b764fa405fd1)
 
 ![image](https://github.com/dennis2908/pemesanan-makanan/assets/42124503/870d5ded-af9a-4a7b-b70c-5e6e33dd34bc)
+
+
+Default seeded user
+Email: admin@example.com
+Password: password123

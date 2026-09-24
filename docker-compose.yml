@@ -6,13 +6,15 @@ services:
     networks:
       - rabbitmq_net
     env_file:
-      - .env  
+      - .env
     depends_on:
       netorder:
-        condition: service_healthy    
+        condition: service_healthy
+      redis:
+        condition: service_started
     ports:
-         - "8000:8000"
-    expose: 
+      - "8000:8000"
+    expose:
       - '8000'
 
   nginx:
@@ -44,12 +46,21 @@ services:
         - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
         - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
     networks:
-        - rabbitmq_net    
+        - rabbitmq_net
     healthcheck:
       test: rabbitmq-diagnostics -q ping
       interval: 30s
       timeout: 30s
       retries: 3
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+    networks:
+      - rabbitmq_net
+    command: redis-server --appendonly yes
+
   netorder:
     image: mysql:5.6
     environment:

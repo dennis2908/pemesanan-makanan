@@ -7,6 +7,52 @@ ${({ theme }) => css`
   ${GlobalStyle}
   html {
     font-size: 16px;
+    scroll-behavior: smooth;
+  }
+
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  a,
+  button,
+  input,
+  select,
+  textarea {
+    transition: color 0.2s ease, background-color 0.2s ease, border-color 0.2s ease,
+      box-shadow 0.2s ease, opacity 0.2s ease, transform 0.2s ease;
+  }
+
+  a {
+    transition-property: color, opacity;
+  }
+
+  button:not(:disabled),
+  a {
+    &:hover {
+      opacity: 0.9;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
   }
   .column.small {
     flex: 0.15 !important;

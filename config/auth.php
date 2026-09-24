@@ -38,12 +38,12 @@ return [
     'guards' => [
         'web' => [
             'driver' => 'session',
-            'provider' => 'musers',
+            'provider' => 'users',
         ],
 
         'api' => [
             'driver' => 'jwt',
-            'provider' => 'musers',
+            'provider' => 'users',
             'hash' => false,
         ],
     ],
@@ -69,10 +69,6 @@ return [
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
-        ],
-		'musers' => [
-            'driver' => 'eloquent',
-            'model' => App\Models\Muser::class,
         ],
 
         // 'users' => [
